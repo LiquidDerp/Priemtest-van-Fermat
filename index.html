@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+      
+<title>Priemtest Van Fermat</title>   
+<script type="text/javascript" src="//peterolson.github.com/BigInteger.js/BigInteger.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.2.3.js"></script>
+<meta name="google-site-verification" content="KqByRn9KJS8SFwkjWFBS62GUTI9940R3CEQr_WYsV9c" />    
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+
+<link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+<style type="text/css">
+
+      
+html {
+  margin: 0;
+}
+
+body {
+  background-color: #dfe3ee;
+  min-width: 930px;
+}
+
+#header {
+  background-color: #627aac;
+  color: #d7ddea;
+  text-align: center;
+  padding: 5px;
+  height: 10%;
+}
+
+#nav {
+  line-height: 30px;
+  background-color: #eeeeee;
+  height: 700px;
+  width: 200px;
+  float: left;
+  padding: 5px;
+  margin: 0;
+}
+
+
+
+#normaleTest {
+  padding: 15px;
+  float:left;
+  padding-left: 12%;
+    
+}
+
+#fermatTest {
+  padding: 15px;
+  float: right;
+  padding-right: 12%;
+}
+
+#info {
+    
+    clear:right;
+    padding-left: 250px;
+    padding-right: 50px;
+    padding-top: 30px;
+    
+}
+
+#tekstje {
+    
+    text-align: justify;
+    
+}
+
+#outputNormalePriemtest {
+    
+    }
+
+#outputFermatPriemtest {
+    
+    }
+
+#footer {
+  background-color: #627aac;
+  color: #d7ddea;
+  clear: both;
+  text-align: center;
+  padding: 5px;
+    
+}
+
+#titel {
+  font-family: Impact, sans-serif;
+  font-size: 50px;
+}
+        
+#edugoLogo {
+    margin:auto;
+    display:block;
+    padding-left: 37px;
+    padding-top: 20px;
+    
+}
+
+#headingCredits {
+    margin-left: 15px;
+    font-family:sans-serif;
+}
+
+#credits {
+    margin-left: 22px; 
+    font-size: small;
+}
+    
+</style>
+    
+
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+//Hier komt de effectieve priemtest, geschreven in javascript met behulp van de library: jQuery.
+
+$(document).ready(function() {
+
+  $('#controleerNormaleTest').click(function() {
+
+
+    var inputNormalePriemtest = $('input[name=inputNormalePriemTest]').val();
+    var inputNormalePriemtestIsPriem = true;
+
+    for (var i = 2; i <= Math.sqrt(inputNormalePriemtest); i++) {
+
+      if (inputNormalePriemtest % i === 0) {
+
+        inputNormalePriemtestIsPriem = false;
+
+      } else {}
+
+    } // </for loop in normale test>
+
+
+ if (inputNormalePriemtest === "1") {
+     
+     $('#outputNormalePriemtestDiv').html("<p id='uitkomstNormalePriemtest'>Het getal 1 is niet priem.</p>")
+ }
+      
+ else if (inputNormalePriemtest === "0") {
+     
+     $('#outputNormalePriemtestDiv').html("<p id='uitkomstNormalePriemtest'>Het getal 0 telt niet mee.</p>")
+ }
+  
+ else if (parseInt(inputNormalePriemtest) < 0) {
+     
+     $('#outputNormalePriemtestDiv').html("<p id='uitkomstNormalePriemtest'>Geef een positief getal in.</p>")
+     
+ } 
+      
+else if (!inputNormalePriemtest) {
+    
+    $('#outputNormalePriemtestDiv').html("<p id='uitkomstNormalePriemtest'>Geef eerst een getal in.</p>")
+
+}
+
+ else { 
+    
+    if (inputNormalePriemtestIsPriem) {
+
+      $('#outputNormalePriemtestDiv').html("<p id='uitkomstNormalePriemtest'>Het getal " + inputNormalePriemtest + " is priem</p>")
+
+    } else {
+
+      $('#outputNormalePriemtestDiv').html("<p id='uitkomstNormalePriemtest'>Het getal " + inputNormalePriemtest + " is niet priem</p>")
+
+    }
+    
+  }
+
+}); 
+    
+
+
+
+
+
+  $('#controleerFermatTest').click(function() {
+
+   
+    var inputFermatPriemtest = $('input[name=inputFermatPriemtest]').val();
+    var inputFermatPriemtestIsPriem = true;
+      
+        if (parseInt(inputFermatPriemtest) < 31) {
+        
+
+	    for (var i = 2; i < parseInt(inputFermatPriemtest); i++) {
+		    
+            var a = bigInt(i).modPow(bigInt(inputFermatPriemtest).add(-1),bigInt(inputFermatPriemtest));
+		    
+			
+		  if (parseInt(a) !== 1){
+			    
+              inputFermatPriemtestIsPriem = false;
+            }
+			    
+		   }
+		
+	    }
+    
+
+    else {
+	    
+	    for (var i = 2; i < 32; i++){ 
+	       
+	       var a = bigInt(i).modPow(bigInt(inputFermatPriemtest).add(-1),bigInt(inputFermatPriemtest));
+		    
+		   if (parseInt(a) > 1) {
+			   
+			    inputFermatPriemtestIsPriem = false;
+			    
+		    }
+	
+	    }
+    }
+      
+
+ 
+
+if (inputFermatPriemtest === "1") {
+     
+     $('#outputFermatPriemtestDiv').html("<p id='uitkomstFermatPriemtest'>Het getal 1 is niet priem.</p>")
+ }
+      
+ else if (inputFermatPriemtest === "0") {
+     
+     $('#outputFermatPriemtestDiv').html("<p id='uitkomstFermatPriemtest'>Het getal 0 telt niet mee.</p>")
+ }
+  
+ else if (parseInt(inputFermatPriemtest) < 0) {
+     
+     $('#outputFermatPriemtestDiv').html("<p id='uitkomstFermatPriemtest'>Geef een positief getal in.</p>")
+     
+ } 
+      
+ else if (!inputFermatPriemtest) {
+    
+   $('#outputFermatPriemtestDiv').html("<p id='uitkomstFermatPriemtest'>Geef eerst een getal in.</p>")
+
+}
+
+ else { 
+    
+    if (inputFermatPriemtestIsPriem) {
+
+      $('#outputFermatPriemtestDiv').html("<p id='uitkomstFermatPriemtest'>Het getal " + inputFermatPriemtest + " is priem.</p>")
+
+    } else {
+
+      $('#outputFermatPriemtestDiv').html("<p id='uitkomstFermatPriemtest'>Het getal " + inputFermatPriemtest + " is niet priem.</p>")
+
+    }
+    
+  }
+
+  }); // </fermat test>
+
+
+});
+
+}//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+ 
+    <!-- Dit is HTML, dit bepaalt hoe de webpagina er uitziet. -->
+    <!-- Gebruikte bronnen: jsfiddle.net
+                        https://repl.it/languages/javascript
+                        https://www.codecademy.com/articles/glossary-javascript
+                        https://www.codecademy.com/articles/glossary-css
+                        http://api.jquery.com/
+                        http://bit.ly/1VeQkj1   -->
+
+    <!-- Created by Michieleke, Kjenta De Vos, Freya Ghillebert, Jonas Di Dier & Marijn De Kerpel. -->
+
+<body>
+
+    <div id="header">
+    <h1 id="titel"> Priemtest van Fermat</h1>
+  </div>
+  
+    <div id="nav">
+            <div id="edugoLogo">
+                <img src="edugoLogo1.png"></img>
+            </div>
+        
+            <h3 id="headingCredits">Gerealiseerd door</h3>
+            <p id="credits">Jonas Di Dier 6LWI8</p>
+            <p id="credits">Freya Ghillebert 6LWI8</p>
+            <p id="credits">Keano De Vos 6LWI8</p>
+            <p id="credits">Marijn De Kerpel 6WeWi8</p>
+            <p id="credits">Michiel Derveeuw 6WeWi6</p>
+            <p id="credits">Meneer Van den Broeck</p>
+   
+    
+    </div>
+  
+    
+    
+        <div id="normaleTest">
+      <h2>Normale priemtest</h2>
+      <input type='Number' id='inputNormalePriemTest' name='inputNormalePriemTest' placeholder='Geef een geheel getal op' />
+      <input type='Button' id='controleerNormaleTest' name='controleerNormaleTest' value='Klaar' />
+      <div id='outputNormalePriemtestDiv'>
+        <p>
+        </p>
+      </div>
+    </div>
+
+        <div id="fermatTest">
+      <h2 id="">Fermats priemtest</h2>
+      <input type='Number' id='inputFermatPriemtest' name='inputFermatPriemtest' placeholder='Geef een geheel getal op' />
+      <input type='Button' id='controleerFermatTest' name='controleerFermatTest' value='Klaar' />
+      <div id='outputFermatPriemtestDiv'>
+        <p>
+
+        </p>
+      </div>
+    </div>
+    
+      
+    
+    <div id="info">
+        
+        <p id="tekstje">
+            Beste bezoeker</p>
+        <p id="tekstje">
+            Als leerlingen van Edugo campus De Toren hebben wij de kans gekregen om groepentheorie te bestuderen. Deze structuur staat centraal in de algebra. Zij vormt namelijk de basis voor alle andere algebraïsche structuren. Bij deze studie hebben we gebruik gemaakt van een boek over groepentheorie, SOHO Wiskunde Plantyn Groepentheorie. Als eindwerk besloten wij een webpagina samen te stellen rond de priemtest van Fermat. </p>
+        <p id="tekstje">
+            Hierboven hebben we zowel een normale priemtest als de priemtest van Fermat geprogrammeerd. De normale priemtest gaat na of een getal al dan niet delers heeft buiten één en zichzelf. Indien hij een deler vindt, is het ingegeven getal niet priem. Daar deze test niet efficiënt is wegens zijn langzame rekentijd, gaat de voorkeur naar de priemtest van Fermat.</p>
+        <p id="tekstje">
+            De priemtest van Fermat is gebaseerd op de kleine stelling van Pierre de Fermat. Deze stelt dat a^(p-1)≡1(mod p) met p een priemgetal en a een willekeurig getal. We geven een getal p in om te kijken of het een priemgetal is. De test controleert of aan de stelling voldaan wordt voor a een reeks willekeurige getallen. Indien de stelling onwaar is voor een bepaalde waarde van a, kunnen we met zekerheid stellen dat het ingegeven getal niet priem is. Indien deze test voor 30 getallen klopt, kunnen we met 1-(½)^30 - meer dan 99.99 procent - zekerheid zeggen dat p een priemgetal is. Het vergt relatief weinig rekenkracht om machten te verheffen, waardoor dit een heel efficient algoritme is om bij grote getallen te controleren of ze priem zijn.</p>
+       <p id="tekstje"></p>
+            Hierboven kan u getallen invullen om na te gaan of ze priem zijn. Je kan al snel zien dat  voor getallen met meer dan 10 cijfers de priemtest van fermat veel sneller is. Voor getallen met meer dan 15 cijfers bij de normale priemtest blokkeert de webpagina zelfs. De limieten van de priemtest van fermat hebben we nog niet gevonden, we weten in iedere geval wel dat hij correct en heel snel werkt met getallen van 100 cijfers.</p>
+         <p id="tekstje">
+            Op deze <a href="https://primes.utm.edu/lists/small/small.html">webpagina</a> kan je een lijst van priemgetallen vinden.</p>
+            
+    </div>
+  
+    <div id="footer">
+    Mede mogelijk gemaakt door <a href='https://www.edugo.be/secundair-onderwijs/de-toren/'> Edugo De Toren</a>
+  </div>
+
+</body>
+
+</html>
+
